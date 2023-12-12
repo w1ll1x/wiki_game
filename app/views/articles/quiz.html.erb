@@ -1,0 +1,28 @@
+<h1>Article Quiz</h1>
+<p><%= @article.description %></p>
+
+<h2>Choose the correct title:</h2>
+<p>Correct Answers: <%= @correct_count %></p>
+<p>Incorrect Answers: <%= @incorrect_count %></p>
+<%= form_tag quiz_submit_path, method: :post do %>
+<ul>
+  <% @possible_titles.each do |title| %>
+    <li>
+      <%= radio_button_tag 'selected_title', title, false, id: "title_#{title}" %>
+      <%= label_tag "title_#{title}", title %>
+    </li>
+  <% end %>
+</ul>
+
+  <%= hidden_field_tag 'correct_title', @correct_title %>
+  <%= submit_tag 'Submit' %>
+<% end %>
+
+<!-- Display flash messages -->
+<% if flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+
+<% if flash[:alert] %>
+  <p class="alert"><%= flash[:alert] %></p>
+<% end %>
