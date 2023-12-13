@@ -6,12 +6,33 @@ class ArticlesController < ApplicationController
   def quiz
     @correct_count = 0
     @incorrect_count = 0
-    @article = Article.order("RANDOM()").first
+
+
+    # Select a random category to use for this quiz instance.
+    # This assumes you have a 'type' column in your 'articles' table for STI.
+    category_types = %w[MusicArticle] #HistoryArticle TechnologyArticle ArtsArticle GeographyArticle
+    category_type = category_types.sample
+
+    # Fetch a random article from the selected category.
+    # Since we are using STI, Rails will automatically query the 'type' column.
+    @article = category_type.constantize.order('RANDOM()').first
     @correct_title = @article.title
     puts "Correct Title: #{@correct_title}"
-    @possible_titles = Article.where.not(title: @correct_title).sample(3).pluck(:title)
+
+    # Fetch three more titles from the same category for the options.
+    @possible_titles = category_type.constantize
+                                    .where.not(id: @article.id)
+                                    .order('RANDOM()')
+                                    .limit(3)
+                                    .pluck(:title)
     @possible_titles << @correct_title
     @possible_titles.shuffle!
+
+    # Reset or initialize the counts.
+    @correct_count = session[:correct_count] || 0
+    @incorrect_count = session[:incorrect_count] || 0
+
+
   end
 
   def quiz_submit
