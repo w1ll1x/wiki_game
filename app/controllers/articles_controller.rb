@@ -71,4 +71,12 @@ class ArticlesController < ApplicationController
     # Redirect to the quiz and display flash messages
     redirect_to quiz_path
   end
+  def reset_counts
+    # Reset the correct_count and incorrect_count to 0
+    session[:correct_count] = 0
+    session[:incorrect_count] = 0
+
+    # Redirect back to the quiz page
+    redirect_to quiz_path
+  end
 end

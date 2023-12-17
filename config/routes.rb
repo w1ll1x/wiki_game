@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :articles, only: [:index]
   get '/quiz', to: 'articles#quiz'
   post '/quiz_submit', to: 'articles#quiz_submit'
+  match 'reset_counts', to: 'articles#reset_counts', via: [:get, :post], as: :reset_counts
+
 
 
 end

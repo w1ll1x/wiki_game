@@ -43,7 +43,7 @@ begin
     download_image(image_url, filename)
 
     # Create and save the NBAArticle
-    article = NbaArticle.new(title: name, description: position, image_path: filename)
+    article = NbaArticle.new(title: name, description: "", image_path: filename)
     if article.save
       puts "Saved article for #{name}"
     else

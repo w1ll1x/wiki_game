@@ -1,12 +1,12 @@
 <div class="container mt-4">
-  <h1 class="mb-3 text-center">Quiz</h1>
+  <div class="row ">
+    <div>
+      <%= link_to 'Change Category', '/articles', class: 'btn btn-primary' %>
 
-  <div class="alert alert-info" role="alert">
-    <strong>Current Category:</strong> <%= @category_type %>
-
-
+      <h1 class="mb-3 text-center"><%= @category_type %> Quiz</h1>
+    </div>
   </div>
-  <%= link_to 'Change Category', '/articles', class: 'btn btn-link' %>
+
 
   <!-- Display Bird Sound if available -->
   <% if @bird_sound %>
@@ -18,7 +18,7 @@
       </audio>
     </div>
   <% else %>
-    <p><%= @article.description %></p>
+    <p class="bg-light rounded p-3"><%= @article.description %></p>
   <% end %>
 
 
@@ -29,10 +29,24 @@
       <%= image_tag(@image_path.sub('public/', '/'), alt: @nba_article.title, class: "img-fluid", style: "max-width: 250px;") %>
     </div>
   <% end %>
+  <div class="row align-items-center justify-content-center mb-3 bg-info bg-opacity-25 rounded p-3">
+    <div class="col text-center">
+      <p class="text-success mb-0">Correct Answers: <%= @correct_count %></p>
+    </div>
+    <div class="col text-center">
+      <p class="text-danger mb-0">Incorrect Answers: <%= @incorrect_count %></p>
+    </div>
+    <div class="col text-center">
+      <%= link_to 'Reset Counts', reset_counts_path, method: :post, class: 'btn btn-danger' %>
+    </div>
+  </div>
 
-  <h2>Choose the correct title:</h2>
-  <p class="text-success">Correct Answers: <%= @correct_count %></p>
-  <p class="text-danger">Incorrect Answers: <%= @incorrect_count %></p>
+  <% if flash[:notice] %>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-warning"><%= flash[:alert] %></div>
+  <% end %>
 
   <%= form_tag quiz_submit_path, method: :post, class: 'mb-3' do %>
     <div class="list-group">
@@ -46,14 +60,4 @@
     <%= hidden_field_tag 'correct_title', @correct_title %>
     <%= submit_tag 'Submit', class: 'btn btn-primary mt-3' %>
   <% end %>
-
-  <!-- Display flash messages -->
-  <% if flash[:notice] %>
-    <div class="alert alert-success"><%= flash[:notice] %></div>
-  <% end %>
-  <% if flash[:alert] %>
-    <div class="alert alert-warning"><%= flash[:alert] %></div>
-  <% end %>
-
-
 </div>

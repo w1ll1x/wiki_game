@@ -1,31 +1,22 @@
-
-<h1>Quiz Rules</h1>
-<p>Here are the rules for the quiz:</p>
-<ul>
-  <li>Select a category to start the quiz.</li>
-  <li>You will be presented with a question and multiple choices.</li>
-  <li>Select the correct answer to score points.</li>
-</ul>
+<div class="container text-center mt-5">
+  <h1 class="mb-4">Welcome to the World's Best Trivia Game!</h1>
+  <div class="p-3 bg-light rounded">
+  <h4>Here are the rules for the quiz:</h4>
+  <ol class="list-group list-group-flush text-start list-group-numbered ">
+    <li class="list-group-item">Select a category to start the quiz.</li>
+    <li class="list-group-item">You will be presented with a question and multiple choices.</li>
+    <li class="list-group-item">Select the correct answer to score points.</li>
+  </ol>
+</div>
+</div>
 
 <!-- Quiz Category Selection -->
-<h2>Select a Quiz Category</h2>
-<ul>
-  <li><%= link_to 'Music', quiz_path(category: 'MusicArticle') %></li>
-  <li><%= link_to 'Bangladesh', quiz_path(category: 'BangladeshArticle') %></li>
-  <li><%= link_to 'BirdSounds', quiz_path(category: 'BirdArticle') %></li>
-  <li><%= link_to 'NBA Players', quiz_path(category: 'NbaArticle') %></li>
-</ul>
-
-
-<h2>Articles by Category</h2>
-<% %w[MusicArticle BangladeshArticle ListenArticle].each do |category| %>
-  <h3><%= category %></h3>
-  <ul>
-    <% Article.where(type: category).each do |article| %>
-      <li>
-        <strong><%= article.title %></strong>
-        <p><%= article.description %></p>
-      </li>
-    <% end %>
+<div class="container text-center mt-5 p-3 bg-light rounded">
+  <h2>Select a Quiz Category</h2>
+  <ul class="list-unstyled d-flex justify-content-center">
+    <li class="mx-2"><%= link_to 'Music', quiz_path(category: 'MusicArticle'), class: 'btn btn-primary' %></li>
+    <li class="mx-2"><%= link_to 'Bangladesh', quiz_path(category: 'BangladeshArticle'), class: 'btn btn-primary' %></li>
+    <li class="mx-2"><%= link_to 'Bird Songs', quiz_path(category: 'BirdArticle'), class: 'btn btn-primary' %></li>
+    <li class="mx-2"><%= link_to 'NBA Players', quiz_path(category: 'NbaArticle'), class: 'btn btn-primary' %></li>
   </ul>
-<% end %>
+</div>
