@@ -14,14 +14,14 @@ require 'nokogiri'
 #   'MusicArticle' # Default category
 # end
 
-
+category = "Bangladesh"
 # Set a counter to keep track of the number of entries created
 counter = 0
 
 while counter < 1000
   begin
     # URL to fetch HTML content
-    url_to_fetch = "https://magnustools.toolforge.org/randomarticle.php?lang=en&project=wikipedia&categories=Music&d=3"
+    url_to_fetch = "https://magnustools.toolforge.org/randomarticle.php?lang=en&project=wikipedia&categories=#{category}&d=3"
 
     # Fetch and read the HTML content from the URL
     html_content = URI.open(url_to_fetch).read
@@ -69,13 +69,13 @@ while counter < 1000
         if title_keywords.any? { |keyword| description_text.include?(keyword) }
           puts "Skipping article with keywords in the description: #{title}"
         else
-          # category_class = determine_category(description).constantize
+          subclass = category + "Article"
           # Create a new Article subclass instance and save it to the database
-          article = MusicArticle.create(title: title, description: description_text)
+          article = BangladeshArticle.create(title: title, description: description_text)
 
 
           if article.persisted?
-            puts "Created Article ##{counter + 1}: #{title}, Music"
+            puts "Created Article ##{counter + 1}: #{title}, #{category}"
             counter += 1
           else
             puts "Failed to save Article ##{counter + 1}: #{title}"

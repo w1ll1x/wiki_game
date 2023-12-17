@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get '/quiz', to: 'articles#quiz'
   post '/quiz_submit', to: 'articles#quiz_submit'
 
+
 end

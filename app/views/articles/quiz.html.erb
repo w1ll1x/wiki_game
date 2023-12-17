@@ -1,28 +1,50 @@
-<h1>Article Quiz</h1>
-<p><%= @article.description %></p>
+<div class="container mt-4">
+  <h1 class="mb-3 text-center">Quiz</h1>
 
-<h2>Choose the correct title:</h2>
-<p>Correct Answers: <%= @correct_count %></p>
-<p>Incorrect Answers: <%= @incorrect_count %></p>
-<%= form_tag quiz_submit_path, method: :post do %>
-<ul>
-  <% @possible_titles.each do |title| %>
-    <li>
-      <%= radio_button_tag 'selected_title', title, false, id: "title_#{title}" %>
-      <%= label_tag "title_#{title}", title %>
-    </li>
+  <div class="alert alert-info" role="alert">
+    <strong>Current Category:</strong> <%= @category_type %>
+
+
+  </div>
+  <%= link_to 'Change Category', '/articles', class: 'btn btn-link' %>
+
+  <!-- Display Bird Sound if available -->
+  <% if @bird_sound %>
+    <div class="mb-3">
+      <p>Listen to the bird sound and guess the bird:</p>
+      <audio controls class="w-100">
+        <source src="<%= url_for(@bird_sound) %>" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  <% else %>
+    <p><%= @article.description %></p>
   <% end %>
-</ul>
 
-  <%= hidden_field_tag 'correct_title', @correct_title %>
-  <%= submit_tag 'Submit' %>
-<% end %>
+  <h2>Choose the correct title:</h2>
+  <p class="text-success">Correct Answers: <%= @correct_count %></p>
+  <p class="text-danger">Incorrect Answers: <%= @incorrect_count %></p>
 
-<!-- Display flash messages -->
-<% if flash[:notice] %>
-  <p class="notice"><%= flash[:notice] %></p>
-<% end %>
+  <%= form_tag quiz_submit_path, method: :post, class: 'mb-3' do %>
+    <div class="list-group">
+      <% @possible_titles.each do |title| %>
+        <label class="list-group-item">
+          <%= radio_button_tag 'selected_title', title, false, id: "title_#{title}", class: 'me-2' %>
+          <%= title %>
+        </label>
+      <% end %>
+    </div>
+    <%= hidden_field_tag 'correct_title', @correct_title %>
+    <%= submit_tag 'Submit', class: 'btn btn-primary mt-3' %>
+  <% end %>
 
-<% if flash[:alert] %>
-  <p class="alert"><%= flash[:alert] %></p>
-<% end %>
+  <!-- Display flash messages -->
+  <% if flash[:notice] %>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-warning"><%= flash[:alert] %></div>
+  <% end %>
+
+
+</div>

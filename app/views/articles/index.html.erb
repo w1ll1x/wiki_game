@@ -1,10 +1,30 @@
-<h1>List of Articles</h1>
 
+<h1>Quiz Rules</h1>
+<p>Here are the rules for the quiz:</p>
 <ul>
-  <% @articles.each do |article| %>
-    <li>
-      <strong><%= article.title %></strong>
-      <p><%= article.description %></p>
-    </li>
-  <% end %>
+  <li>Select a category to start the quiz.</li>
+  <li>You will be presented with a question and multiple choices.</li>
+  <li>Select the correct answer to score points.</li>
 </ul>
+
+<!-- Quiz Category Selection -->
+<h2>Select a Quiz Category</h2>
+<ul>
+  <li><%= link_to 'Music', quiz_path(category: 'MusicArticle') %></li>
+  <li><%= link_to 'Bangladesh', quiz_path(category: 'BangladeshArticle') %></li>
+  <li><%= link_to 'BirdSounds', quiz_path(category: 'BirdArticle') %></li>
+</ul>
+
+
+<h2>Articles by Category</h2>
+<% %w[MusicArticle BangladeshArticle ListenArticle].each do |category| %>
+  <h3><%= category %></h3>
+  <ul>
+    <% Article.where(type: category).each do |article| %>
+      <li>
+        <strong><%= article.title %></strong>
+        <p><%= article.description %></p>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
