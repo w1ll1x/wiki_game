@@ -21,6 +21,15 @@
     <p><%= @article.description %></p>
   <% end %>
 
+
+  <% if @nba_article && @image_path %>
+    <h2>Who is this NBA player?</h2>
+    <div class="text-center mb-4">
+
+      <%= image_tag(@image_path.sub('public/', '/'), alt: @nba_article.title, class: "img-fluid", style: "max-width: 250px;") %>
+    </div>
+  <% end %>
+
   <h2>Choose the correct title:</h2>
   <p class="text-success">Correct Answers: <%= @correct_count %></p>
   <p class="text-danger">Incorrect Answers: <%= @incorrect_count %></p>

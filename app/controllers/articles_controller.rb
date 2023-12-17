@@ -23,7 +23,7 @@ class ArticlesController < ApplicationController
     end
 
     # Ensure the category is one of the allowed types
-    allowed_category_types = %w[MusicArticle BangladeshArticle BirdArticle]
+    allowed_category_types = %w[MusicArticle BangladeshArticle BirdArticle NbaArticle]
     category_type = 'MusicArticle' unless allowed_category_types.include?(category_type)
 
     @category_type = category_type
@@ -32,11 +32,14 @@ class ArticlesController < ApplicationController
     @article = category_type.constantize.order('RANDOM()').first
     @correct_title = @article.title
 
-    # For BirdArticle, ensure the MP3 is accessible for playback
+
     @bird_sound = @article.mp3_file if @article.is_a?(BirdArticle)
+    if @category_type == 'NbaArticle'
+      @nba_article = NbaArticle.order('RANDOM()').first
+      @image_path = @nba_article.image_path.sub(/\Apublic\//, '/') if @nba_article&.image_path.present?
+    end
 
 
-    # Fetch three more titles from the same category for the options
     @possible_titles = category_type.constantize
                                     .where.not(id: @article.id)
                                     .order('RANDOM()')
